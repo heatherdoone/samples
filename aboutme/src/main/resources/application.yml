@@ -1,0 +1,45 @@
+spring.profiles.active: desktop
+---
+
+
+#
+#   THIS IS spring mvc port
+#
+server:
+  port: 7082
+  
+  
+ #
+ # this is test property
+ #
+heather: 
+  test: 16
+  
+aboutme:
+  test: testvalue
+  
+---
+
+#
+#  Junit tests: different profiles will force application context caching
+#
+spring:
+    profiles: junit
+    
+heather:
+  samples:
+    test1: "value1"
+    test2: 3
+
+
+---
+
+#
+#  Mongo DB port
+#
+
+spring:
+  data:
+    mongodb:
+      port: 
+  

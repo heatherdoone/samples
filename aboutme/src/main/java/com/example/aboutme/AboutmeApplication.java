@@ -16,13 +16,6 @@ public class AboutmeApplication {
 		logger.info("Getting ready to start About Me!");
 		
 		ApplicationContext context = SpringApplication.run(AboutmeApplication.class, args);
-		//System.out.println("Let's inspect the beans provided by Spring Boot:");
-        
-//        String[] beanNames = context.getBeanDefinitionNames();
-//        Arrays.sort(beanNames);
-//        for (String beanName : beanNames) {
-//            System.out.println(beanName);
-//        }
-//		
+		
 	}
 }
