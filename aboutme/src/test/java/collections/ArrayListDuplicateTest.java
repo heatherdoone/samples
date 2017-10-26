@@ -226,26 +226,26 @@ public class ArrayListDuplicateTest {
 	}
 
 	@Test
-	public void firstDuplicate ()
+	public void firstDuplicateWithLeast2ndOccuranceIndexTest ()
 			throws Exception {
 		logger.info( "firstDuplicate Test Start" );
 		Integer returnValue;
 		
-		int[]  duplicateIntegers = { 3, 4, 5, 6, 7, 9, 0, 3, 0, 5, 7, 5, 4 };
-		returnValue = firstDuplicate( duplicateIntegers );
+		int[] duplicateIntegers = { 3, 4, 5, 6, 7, 9, 0, 3, 0, 5, 7, 5, 4 };
+		returnValue = firstDuplicateWithLeast2ndOccuranceIndex( duplicateIntegers );
 		logger.info( "printing duplicateIntegers return Value {}", returnValue );
 		
 		assertThat( returnValue ).isEqualTo( 3 );
 		
 		int[] nointegers = {};
-		returnValue = firstDuplicate( nointegers );
+		returnValue = firstDuplicateWithLeast2ndOccuranceIndex( nointegers );
 		logger.info( "printing nointegers return Value {}", returnValue );
 		
 		assertThat( returnValue ).isEqualTo( -1 );
 
 		
 		int[] noDuplicateintegers = {0,1,2,3,4,5,6};
-		returnValue = firstDuplicate( noDuplicateintegers );
+		returnValue = firstDuplicateWithLeast2ndOccuranceIndex( noDuplicateintegers );
 		logger.info( "printing noDuplicateintegers return Value {}", returnValue );
 		
 		assertThat( returnValue ).isEqualTo( -1 );
@@ -255,15 +255,19 @@ public class ArrayListDuplicateTest {
 		                         7, 3, 18, 9, 32, 21, 3, 21, 50, 10, 45, 13, 22, 1, 27, 18, 3, 27, 30, 44, 
 		                         12, 30, 40, 1, 1, 31, 6, 18, 33, 5};
 		
-		returnValue = firstDuplicate( customDupTest13 );
+		returnValue = firstDuplicateWithLeast2ndOccuranceIndex( customDupTest13 );
 		logger.info( "printing customDupTest13 return Value {}", returnValue );
 		
 		assertThat( returnValue ).isEqualTo( 34 );
 
 	}
 
-	int firstDuplicate ( int[] a ) {
-
+	int firstDuplicateWithLeast2ndOccuranceIndex ( int[] a ) {
+		
+		String [] letters = {"a", "b", "c"};
+		List<String> listWithDuplicateLetters = Arrays.asList(letters);
+		logger.info( "printing listWithDuplicateLetters : {} ", listWithDuplicateLetters );
+		
 		List<Integer> listWithDuplicates = Arrays
 			.stream( a )
 			.boxed()
@@ -271,33 +275,33 @@ public class ArrayListDuplicateTest {
 
 		logger.info( "printing listWithDuplicates : {} ", listWithDuplicates );
 
-		Map<Integer, List<Integer>> mapMultipleIndices = new LinkedHashMap<Integer, List<Integer>>();
+		Map<Integer, List<Integer>> mapValuesToMultipleIndices = new LinkedHashMap<Integer, List<Integer>>();
 
 		for ( ListIterator<Integer> iterator = listWithDuplicates.listIterator(); iterator.hasNext(); ) {
 
 			Integer nextInteger = iterator.next();
 
-			List<Integer> indexList = mapMultipleIndices.get( nextInteger );
+			List<Integer> indexList = mapValuesToMultipleIndices.get( nextInteger );
 
 			if ( indexList == null ) {
-				mapMultipleIndices.put( nextInteger, indexList = new ArrayList<Integer>() );
+				mapValuesToMultipleIndices.put( nextInteger, indexList = new ArrayList<Integer>() );
 			}
 
 			indexList.add( iterator.previousIndex() );
 		}
 
-		logger.info( "Map of duplicatelist : {} ", mapMultipleIndices );
+		logger.info( "Map of duplicatelist : {} ", mapValuesToMultipleIndices );
 
 		Map<Integer, Integer> least2ndIndexMap = new TreeMap<Integer, Integer>();
 
-		for ( Map.Entry<Integer, List<Integer>> entryItem : mapMultipleIndices.entrySet() ) {
+		for ( Map.Entry<Integer, List<Integer>> entryItem : mapValuesToMultipleIndices.entrySet() ) {
 			List<Integer> indexList = entryItem.getValue();
 
-			Integer index = 1;
+			Integer secondOccuranceIndex = 1;
 
-			if ( indexList.size() > 1 && indexList.get( index ) != null ) {
+			if ( indexList.size() > 1 && indexList.get( secondOccuranceIndex ) != null ) {
 
-				least2ndIndexMap.put( indexList.get( index ), entryItem.getKey() );
+				least2ndIndexMap.put( indexList.get( secondOccuranceIndex ), entryItem.getKey() );
 
 			}
 
@@ -310,16 +314,16 @@ public class ArrayListDuplicateTest {
 		logger.info( "Printing keySetList : {}  ", keySetList );
 
 		Integer least2ndIndexValue = -1;
-		int loopCount = 0;
+		int loopOnly1Time = 0;
 
 		for ( Map.Entry<Integer, Integer> entryItem : least2ndIndexMap.entrySet() ) {
-			if ( loopCount < 1 ) {
+			if ( loopOnly1Time < 1 ) {
 				least2ndIndexValue = entryItem.getValue();
 
 				logger.info( "printing index Value {}", least2ndIndexValue );
 			}
 
-			loopCount++;
+			loopOnly1Time++;
 
 		}
 
